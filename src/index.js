@@ -2,18 +2,26 @@
 const express = require('express');
 const serverless = require("serverless-http");
 const router = require("./routes/route");
-const generatedToken = require('./middleware/middleware');
+const cors = require("cors");
 const app = express();
 const port = 3000; // Replace with the desired port number
 
 // Uncomment for additional logging
-// console.log(generatedToken);  
-  
+app.use(cors());
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/", router);
 // Use the router for handling routes in Netlify environment
 app.use(`/.netlify/functions/index`, router);
   
-// Use the router for handling regular routes
+
+
+
+app.listen(3000, () => {
+    console.log(`Express app running on port ${3000}`);
+  });
+  
 
 
 // Start the server
